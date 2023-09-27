@@ -55,7 +55,7 @@ def capchatokengenerate():
     finaltoken = re.search(r'rresp","(.*?)"', r2.text).group(1)
     return finaltoken
 def capchabypass2():
-    twocaptcha = TwoCaptcha("2611d430a7facc26c0e844af2f15e16f")
+    twocaptcha = TwoCaptcha("9f97e56a3af47d74858098a0fbe41dea")
     result = twocaptcha.recaptcha(sitekey='6LfEmSMUAAAAAEDmOgt1G7o7c53duZH2xL_TXckC',
                                        url='https://id.freepikcompany.com/v2/log-in?client_id=freepik',
                                        version='v3').get('code')
