@@ -250,7 +250,7 @@ def loginfreepik(link):
 
                 elif specific_value > 0:
                     specific_value += 1
-                    if specific_value == 4:
+                    if specific_value == 6:
                         update_operation = {
                             "$set": {"count": 0}}
                         result = Collection.update_one({}, update_operation)
