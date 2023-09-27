@@ -7,6 +7,7 @@ import urllib3
 from urllib.parse import unquote
 import urllib.parse
 from pymongo import MongoClient
+from twocaptcha import TwoCaptcha
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -53,6 +54,13 @@ def capchatokengenerate():
 
     finaltoken = re.search(r'rresp","(.*?)"', r2.text).group(1)
     return finaltoken
+def capchabypass2():
+    twocaptcha = TwoCaptcha("2611d430a7facc26c0e844af2f15e16f")
+    result = twocaptcha.recaptcha(sitekey='6LfEmSMUAAAAAEDmOgt1G7o7c53duZH2xL_TXckC',
+                                       url='https://id.freepikcompany.com/v2/log-in?client_id=freepik',
+                                       version='v3').get('code')
+
+    return result
 
 def capchabypass():
     solver = recaptchaV2Proxyless()
@@ -194,7 +202,7 @@ def loginfreepik(link):
                         "Sec-Fetch-Site": "same-site",
                         "User-Agent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Mobile Safari/537.36"
                     }
-                    token = capchabypass()
+                    token = capchabypass2()
                     body = """{\"email\":\"arlene.camilo@gmail.com\",\"password\":\"areca1986\",\"recaptchaToken\":\"""" + str(
                         token) + """\",\"lang\":\"en-US\"}"""
                     resp = session.post(url=urllogin, data=body, headers=headers)
