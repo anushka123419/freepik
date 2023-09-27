@@ -175,7 +175,7 @@ def loginfreepik(link):
                 for document in results:
                     specific_value = document["count"]
 
-                if specific_value == 4:
+                if specific_value == 0:
                     urllogin = "https://id-api.freepikcompany.com/v2/login?client_id=freepik"
 
                     headers = {
@@ -232,23 +232,33 @@ def loginfreepik(link):
                     dwn = json.loads(r6.text)
                     check = dwn['success']
                     downloadurl = dwn['url']
+                    nxthead = {
+                        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36",
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    }
 
-                    dwnresp = session.get(url=downloadurl, headers=dwnreqhead)
+                    dwnresp = session.get(url=downloadurl, headers=nxthead)
                     file_content = dwnresp.content
                     news = upload_file_to_pcloud(file_content, realimagename)
                     my_json_string = json.dumps({'status': 'true', 'result': {'download': news}})
 
                     update_operation = {
-                        "$set": {"count": 0}}
+                        "$set": {"count": 1}}
                     result = Collection.update_one({}, update_operation)
 
                     return my_json_string
 
-                elif specific_value < 4:
+                elif specific_value > 0:
                     specific_value += 1
-                    update_operation = {
-                        "$set": {"count": specific_value}}
-                    result = Collection.update_one({}, update_operation)
+                    if specific_value == 4:
+                        update_operation = {
+                            "$set": {"count": 0}}
+                        result = Collection.update_one({}, update_operation)
+                    else:
+                        update_operation = {
+                            "$set": {"count": specific_value}}
+                        result = Collection.update_one({}, update_operation)
+
                     dwnreqhead = {
                         "Host": "www.freepik.com",
                         "Connection": "keep-alive",
@@ -271,8 +281,12 @@ def loginfreepik(link):
                     dwn = json.loads(r6.text)
                     check = dwn['success']
                     downloadurl = dwn['url']
+                    nxthead = {
+                        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36",
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    }
 
-                    dwnresp = session.get(url=downloadurl, headers=dwnreqhead)
+                    dwnresp = session.get(url=downloadurl, headers=nxthead)
                     file_content = dwnresp.content
                     news = upload_file_to_pcloud(file_content, realimagename)
                     my_json_string = json.dumps({'status': 'true', 'result': {'download': news}})
